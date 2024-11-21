@@ -1,0 +1,79 @@
+<fsmddescription>
+
+  <statelist>
+    <state>INITIALIZE</state>
+    <state>COMPUTE</state>
+    <state>FINISH</state>
+  </statelist>
+
+  <initialstate>INITIALIZE</initialstate>
+
+  <inputlist>
+    <input>in_a</input>
+    <input>in_b</input>
+  </inputlist>
+
+  <variablelist>
+    <variable>var_a</variable>
+    <variable>var_b</variable>
+    <variable>var_c</variable>
+  </variablelist>
+
+  <operationlist>
+    <operation>
+      <name>init_a</name>
+      <expression>var_a = in_a</expression>
+    </operation>
+    <operation>
+      <name>init_b</name>
+      <expression>var_b = in_b</expression>
+    </operation>
+    <operation>
+      <name>decrease_a_by_1</name>
+      <expression>var_a = var_a - 1</expression>
+    </operation>
+    <operation>
+      <name>increase_b_by_a</name>
+      <expression>var_b = var_b + in_b</expression>
+    </operation>
+  </operationlist>
+
+  <conditionlist>
+    <condition>
+      <name>a_not_zero</name>
+      <expression>var_a &gt; 0</expression>
+    </condition>
+  </conditionlist>
+
+  <fsmd>
+    <INITIALIZE>
+      <transition>
+        <condition>True</condition>
+        <instruction>init_a init_b</instruction>
+        <nextstate>COMPUTE</nextstate>
+      </transition>
+    </INITIALIZE>
+
+    <COMPUTE>
+      <transition>
+        <condition>a_not_zero</condition>
+        <instruction>decrease_a_by_1 increase_b_by_a</instruction>
+        <nextstate>COMPUTE</nextstate>
+      </transition>
+      <transition>
+        <condition>True</condition>
+        <instruction>NOP</instruction>
+        <nextstate>FINISH</nextstate>
+      </transition>
+    </COMPUTE>
+
+    <FINISH>
+      <transition>
+        <condition>True</condition>
+        <instruction>NOP</instruction>
+        <nextstate>FINISH</nextstate>
+      </transition>
+    </FINISH>
+  </fsmd>
+
+</fsmddescription>
